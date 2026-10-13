@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Memory percentage, graph and menu bar value turn yellow at 70%, orange at 80% and red at 90% usage
+
 ## 0.2.0 – 2026-10-13
 
 - Quit and Force Quit actions on every row of the Top Processes lists (CPU and Memory panels)

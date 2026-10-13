@@ -261,13 +261,14 @@ struct MemoryDetail: View {
     var body: some View {
         let m = store.snapshot.memory
         let total = Double(max(m.total, 1))
+        let level = UsageLevel.color(for: m.usedFraction * 100, normal: Module.memory.color)
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .top) {
-                BigValue(value: Format.percent(m.usedFraction * 100), caption: "\(Format.bytes(m.used)) of \(Format.bytes(m.total)) used", color: Module.memory.color)
+                BigValue(value: Format.percent(m.usedFraction * 100), caption: "\(Format.bytes(m.used)) of \(Format.bytes(m.total)) used", color: level)
                 Spacer()
             }
-            DetailGraph(series: [GraphSeries(values: store.memoryHistory.values, color: Module.memory.color)],
-                        maxValue: 100, legend: [("Used", Module.memory.color)])
+            DetailGraph(series: [GraphSeries(values: store.memoryHistory.values, color: level)],
+                        maxValue: 100, legend: [("Used", level)])
 
             UsageBar(segments: [
                 (Double(m.app) / total, .green),

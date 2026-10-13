@@ -49,7 +49,10 @@ struct MenuBarItemView: View {
         case .cpu:
             Text(Format.percent(s.cpu.total)).valueStyle().frame(width: 32, alignment: .trailing)
         case .memory:
-            Text(Format.percent(s.memory.usedFraction * 100)).valueStyle().frame(width: 32, alignment: .trailing)
+            let percent = s.memory.usedFraction * 100
+            Text(Format.percent(percent)).valueStyle()
+                .foregroundStyle(percent >= 70 ? UsageLevel.color(for: percent) : .primary)
+                .frame(width: 32, alignment: .trailing)
         case .network:
             VStack(alignment: .trailing, spacing: 0) {
                 Text("↓ " + Format.rateShort(s.network.downloadRate))
@@ -72,7 +75,9 @@ struct MenuBarItemView: View {
     private var graphSeries: [GraphSeries] {
         switch module {
         case .cpu: return [GraphSeries(values: store.cpuHistory.values, color: module.color)]
-        case .memory: return [GraphSeries(values: store.memoryHistory.values, color: module.color)]
+        case .memory:
+            let color = UsageLevel.color(for: store.snapshot.memory.usedFraction * 100, normal: module.color)
+            return [GraphSeries(values: store.memoryHistory.values, color: color)]
         case .network: return [GraphSeries(values: store.downloadHistory.values, color: .blue),
                                GraphSeries(values: store.uploadHistory.values, color: .orange)]
         case .disk: return [GraphSeries(values: store.readHistory.values, color: .blue),

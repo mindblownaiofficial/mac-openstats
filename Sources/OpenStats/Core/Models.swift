@@ -147,3 +147,16 @@ struct History {
         }
     }
 }
+
+/// Maps a usage percentage to a warning color: green below 70%, then yellow,
+/// orange at 80% and red from 90%.
+enum UsageLevel {
+    static func color(for percent: Double, normal: Color = .green) -> Color {
+        switch percent {
+        case ..<70: return normal
+        case ..<80: return .yellow
+        case ..<90: return .orange
+        default: return .red
+        }
+    }
+}
