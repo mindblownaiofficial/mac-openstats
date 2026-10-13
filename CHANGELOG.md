@@ -1,8 +1,8 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 – 2026-10-13
 
-- Quit and Force Quit actions on every row of the Top Processes lists
+- Quit and Force Quit actions on every row of the Top Processes lists (CPU and Memory panels)
 
 ## 0.1.0 – 2026-10-13
 

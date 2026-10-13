@@ -144,7 +144,7 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(options: [
             .applicationName: "OpenStats",
-            .applicationVersion: "0.1.0",
+            .applicationVersion: "0.2.0",
             .credits: NSAttributedString(string: "A free, open-source system monitor for the macOS menu bar.\nMIT licensed."),
         ])
     }
