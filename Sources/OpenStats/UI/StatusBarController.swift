@@ -17,6 +17,8 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
     private var hosts: [Module: NSView] = [:]
     private var cancellables = Set<AnyCancellable>()
     private var settingsWindow: NSWindow?
+    private var dashboardWindow: NSWindow?
+    private var fallbackItem: NSStatusItem?
 
     init(store: StatsStore, settings: Settings) {
         self.store = store
@@ -28,6 +30,7 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         popover.delegate = self
         popover.contentViewController = NSHostingController(
             rootView: PopoverView(openSettings: { [weak self] in self?.showSettings() },
+                                  openDashboard: { [weak self] in self?.showDashboard() },
                                   quit: { NSApp.terminate(nil) })
                 .environmentObject(store)
                 .environmentObject(settings)
@@ -55,6 +58,22 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         for item in items.values { NSStatusBar.system.removeStatusItem(item) }
         items.removeAll()
         hosts.removeAll()
+        if let fallbackItem { NSStatusBar.system.removeStatusItem(fallbackItem) }
+        fallbackItem = nil
+
+        // Never leave the user without a way back in: if every module is off,
+        // show a plain OpenStats item that opens the menu.
+        if visibleModules.isEmpty {
+            let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+            if let button = item.button {
+                button.image = NSImage(systemSymbolName: "chart.bar.xaxis", accessibilityDescription: "OpenStats")
+                button.toolTip = "OpenStats: all modules are hidden. Click for Dashboard and Settings."
+                button.target = self
+                button.action = #selector(fallbackClicked(_:))
+            }
+            fallbackItem = item
+            return
+        }
 
         // Status items are inserted to the left of existing ones, so add in reverse
         // to keep the natural module order from left to right.
@@ -112,12 +131,45 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         for item in items.values { item.button?.highlight(false) }
     }
 
-    private func showContextMenu(for module: Module, button: NSStatusBarButton) {
+    @objc private func fallbackClicked(_ sender: NSStatusBarButton) {
+        guard let item = fallbackItem else { return }
+        item.menu = buildMenu()
+        sender.performClick(nil)
+        item.menu = nil
+    }
+
+    private func buildMenu() -> NSMenu {
         let menu = NSMenu()
+        menu.addItem(withTitle: "Dashboard", action: #selector(showDashboard), keyEquivalent: "d").target = self
         menu.addItem(withTitle: "Settings…", action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(withTitle: "About OpenStats", action: #selector(showAbout), keyEquivalent: "").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit OpenStats", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+        return menu
+    }
+
+    @objc func showDashboard() {
+        popover.performClose(nil)
+        if dashboardWindow == nil {
+            let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 780, height: 640),
+                                  styleMask: [.titled, .closable, .miniaturizable, .resizable],
+                                  backing: .buffered, defer: false)
+            window.title = "OpenStats Dashboard"
+            window.contentViewController = NSHostingController(
+                rootView: DashboardView(openSettings: { [weak self] in self?.showSettings() })
+                    .environmentObject(store)
+                    .environmentObject(settings))
+            window.isReleasedWhenClosed = false
+            window.center()
+            window.setFrameAutosaveName("OpenStatsDashboard")
+            dashboardWindow = window
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        dashboardWindow?.makeKeyAndOrderFront(nil)
+    }
+
+    private func showContextMenu(for module: Module, button: NSStatusBarButton) {
+        let menu = buildMenu()
         guard let item = items[module] else { return }
         item.menu = menu
         button.performClick(nil)
@@ -144,7 +196,7 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(options: [
             .applicationName: "OpenStats",
-            .applicationVersion: "0.3.0",
+            .applicationVersion: "0.4.0",
             .credits: NSAttributedString(string: "A free, open-source system monitor for the macOS menu bar.\nMIT licensed."),
         ])
     }

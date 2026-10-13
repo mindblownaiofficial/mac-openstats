@@ -12,6 +12,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBar = StatusBarController(store: store, settings: settings)
         store.start()
     }
+
+    /// Opening the app again from Finder or the Dock while it is already running
+    /// shows the dashboard, so there is always a way in even with every menu bar item hidden.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
+        statusBar.showDashboard()
+        return false
+    }
 }
 
 @main

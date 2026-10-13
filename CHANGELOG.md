@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 – 2026-10-14
+
+- Dashboard window with all modules side by side, from the right-click menu or the panel footer
+- A fallback OpenStats menu bar icon stays visible when every module is turned off, so Settings is always reachable
+- Opening the app again while it is running shows the Dashboard
+
 ## 0.3.0 – 2026-10-13
 
 - Memory percentage, graph and menu bar value turn yellow at 70%, orange at 80% and red at 90% usage

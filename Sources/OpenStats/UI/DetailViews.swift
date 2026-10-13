@@ -11,6 +11,7 @@ struct PopoverView: View {
     @EnvironmentObject var settings: Settings
     @EnvironmentObject var state: PopoverState
     var openSettings: () -> Void
+    var openDashboard: () -> Void
     var quit: () -> Void
 
     var body: some View {
@@ -66,6 +67,9 @@ struct PopoverView: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
             Spacer()
+            Button(action: openDashboard) { Image(systemName: "rectangle.grid.2x2") }
+                .buttonStyle(.plain)
+                .help("Dashboard")
             Button(action: openSettings) { Image(systemName: "gearshape") }
                 .buttonStyle(.plain)
                 .help("Settings")

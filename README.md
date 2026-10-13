@@ -37,6 +37,7 @@ blocked by Gatekeeper: open **System Settings → Privacy & Security** and click
 - **Battery** – charge, time remaining, health, cycle count, temperature,
   voltage and power draw (hidden automatically on desktop Macs).
 - **Quit or force quit** any process straight from the Top Processes list.
+- **Dashboard** window showing every module at once (right-click any item → Dashboard).
 - Scrolling history graphs in the menu bar and in the panel.
 - Per-module toggles for icon, graph and value; adjustable refresh rate;
   launch at login.
@@ -52,6 +53,11 @@ blocked by Gatekeeper: open **System Settings → Privacy & Security** and click
   and what each one shows.
 - In the CPU and Memory panels, click the ⓧ next to a process to **Quit** it
   (the app can save first) or **Force Quit** it (after a confirmation).
+- **Dashboard**: right-click any item, or click the grid icon in a panel, to open a
+  window with all modules side by side.
+- Turned every module off? A small OpenStats icon stays in the menu bar with
+  Dashboard and Settings, and opening the app again from Applications also
+  shows the Dashboard.
 
 ## Build from source
 
