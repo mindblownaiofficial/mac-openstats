@@ -7,6 +7,10 @@ menu bar, with a detail panel one click away.
 Built as a free alternative to paid menu bar monitors. No ads, no telemetry, no
 subscription. MIT licensed.
 
+## Screenshot
+<img width="1078" height="45" alt="image" src="https://github.com/user-attachments/assets/e6f9d65c-b987-4aab-9075-64d6b804dcc9" />
+
+
 ## Install
 
 Download the installer from the
