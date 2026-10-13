@@ -9,8 +9,10 @@ struct MenuBarItemView: View {
     private var config: ModuleConfig { settings.config(for: module) }
 
     var body: some View {
+        // Always draw at least the icon so an item can never become invisible.
+        let showIcon = config.showIcon || (!config.showGraph && !config.showValue)
         HStack(spacing: 4) {
-            if config.showIcon {
+            if showIcon {
                 Image(systemName: iconName)
                     .font(.system(size: 11, weight: .medium))
                     .frame(width: 14)

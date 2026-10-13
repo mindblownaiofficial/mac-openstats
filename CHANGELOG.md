@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.1 – 2026-10-14
+
+- Fixed: toggling modules in Settings rebuilt the menu bar from the previous state, so enabling a single module (for example only Memory) showed nothing
+- A menu bar item always shows at least its icon, even with icon, graph and value all unticked
+
 ## 0.4.0 – 2026-10-14
 
 - Dashboard window with all modules side by side, from the right-click menu or the panel footer

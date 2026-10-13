@@ -38,8 +38,12 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         )
 
         rebuild()
+        // @Published fires before the new value is stored, so hop to the next
+        // run loop pass; by then `settings.configs` holds the updated value.
         settings.$configs
+            .dropFirst()
             .removeDuplicates()
+            .receive(on: RunLoop.main)
             .sink { [weak self] _ in self?.rebuild() }
             .store(in: &cancellables)
         settings.$refreshInterval
@@ -196,7 +200,7 @@ final class StatusBarController: NSObject, NSPopoverDelegate {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel(options: [
             .applicationName: "OpenStats",
-            .applicationVersion: "0.4.0",
+            .applicationVersion: "0.4.1",
             .credits: NSAttributedString(string: "A free, open-source system monitor for the macOS menu bar.\nMIT licensed."),
         ])
     }
