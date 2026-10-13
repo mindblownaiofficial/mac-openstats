@@ -169,21 +169,16 @@ struct ProcessList: View {
                     Text(metric == .cpu ? Format.percent(row.cpu, decimals: 1) : Format.bytes(row.memory))
                         .monospacedDigit()
                         .foregroundStyle(.secondary)
-                    Menu {
-                        Button("Quit \(row.name)") {
-                            ProcessControl.quit(row, force: false, store: store)
-                        }
-                        Button("Force Quit \(row.name)…") {
-                            ProcessControl.quit(row, force: true, store: store)
-                        }
+                    Button {
+                        ProcessActionMenu.show(for: row, store: store)
                     } label: {
-                        Image(systemName: "xmark.circle")
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.system(size: 13))
                             .foregroundStyle(.secondary)
+                            .frame(width: 18, height: 18)
+                            .contentShape(Rectangle())
                     }
-                    .menuStyle(.borderlessButton)
-                    .menuIndicator(.hidden)
-                    .fixedSize()
-                    .frame(width: 16)
+                    .buttonStyle(.plain)
                     .help("Quit or force quit this process")
                 }
                 .font(.system(size: 12))

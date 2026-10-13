@@ -39,3 +39,32 @@ enum ProcessControl {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { store.refreshNow() }
     }
 }
+
+/// Pops up a native menu with Quit / Force Quit for a process row at the mouse location.
+@MainActor
+final class ProcessActionMenu: NSObject {
+    private static var current: ProcessActionMenu?
+    private let row: ProcessRow
+    private let store: StatsStore
+
+    private init(row: ProcessRow, store: StatsStore) {
+        self.row = row
+        self.store = store
+    }
+
+    static func show(for row: ProcessRow, store: StatsStore) {
+        let handler = ProcessActionMenu(row: row, store: store)
+        current = handler  // keep alive while the menu is open
+        let menu = NSMenu()
+        let quit = NSMenuItem(title: "Quit \(row.name)", action: #selector(quitAction), keyEquivalent: "")
+        quit.target = handler
+        let force = NSMenuItem(title: "Force Quit \(row.name)…", action: #selector(forceQuitAction), keyEquivalent: "")
+        force.target = handler
+        menu.addItem(quit)
+        menu.addItem(force)
+        menu.popUp(positioning: nil, at: NSEvent.mouseLocation, in: nil)
+    }
+
+    @objc private func quitAction() { ProcessControl.quit(row, force: false, store: store) }
+    @objc private func forceQuitAction() { ProcessControl.quit(row, force: true, store: store) }
+}
