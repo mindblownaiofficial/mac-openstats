@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 – 2026-10-13
 
 - Memory percentage, graph and menu bar value turn yellow at 70%, orange at 80% and red at 90% usage
 
