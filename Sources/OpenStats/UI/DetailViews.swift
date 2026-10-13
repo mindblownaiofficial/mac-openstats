@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 final class PopoverState: ObservableObject {
     @Published var module: Module = .cpu
@@ -157,16 +158,33 @@ struct ProcessList: View {
     enum Metric { case cpu, memory }
     let rows: [ProcessRow]
     let metric: Metric
+    @EnvironmentObject var store: StatsStore
 
     var body: some View {
         VStack(spacing: 3) {
             ForEach(rows) { row in
-                HStack {
+                HStack(spacing: 6) {
                     Text(row.name).lineLimit(1).truncationMode(.middle)
                     Spacer()
                     Text(metric == .cpu ? Format.percent(row.cpu, decimals: 1) : Format.bytes(row.memory))
                         .monospacedDigit()
                         .foregroundStyle(.secondary)
+                    Menu {
+                        Button("Quit \(row.name)") {
+                            ProcessControl.quit(row, force: false, store: store)
+                        }
+                        Button("Force Quit \(row.name)…") {
+                            ProcessControl.quit(row, force: true, store: store)
+                        }
+                    } label: {
+                        Image(systemName: "xmark.circle")
+                            .foregroundStyle(.secondary)
+                    }
+                    .menuStyle(.borderlessButton)
+                    .menuIndicator(.hidden)
+                    .fixedSize()
+                    .frame(width: 16)
+                    .help("Quit or force quit this process")
                 }
                 .font(.system(size: 12))
             }

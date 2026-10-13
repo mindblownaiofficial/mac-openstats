@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Quit and Force Quit actions on every row of the Top Processes lists
+
 ## 0.1.0 – 2026-10-13
 
 First release.

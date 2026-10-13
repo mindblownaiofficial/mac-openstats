@@ -48,6 +48,12 @@ final class StatsStore: ObservableObject {
         timer = nil
     }
 
+    /// Take a sample now, including the process list, without waiting for the timer.
+    func refreshNow() {
+        ticks = 0
+        tick()
+    }
+
     func setInterval(_ newInterval: TimeInterval) {
         guard newInterval != interval else { return }
         interval = newInterval

@@ -31,6 +31,7 @@ need a right-click → **Open**. Details, including uninstalling, are in
   mounted volume.
 - **Battery** – charge, time remaining, health, cycle count, temperature,
   voltage and power draw (hidden automatically on desktop Macs).
+- **Quit or force quit** any process straight from the Top Processes list.
 - Scrolling history graphs in the menu bar and in the panel.
 - Per-module toggles for icon, graph and value; adjustable refresh rate;
   launch at login.
@@ -44,6 +45,8 @@ need a right-click → **Open**. Details, including uninstalling, are in
 - **Right-click** any item for Settings, About and Quit.
 - The gear in the panel opens Settings, where you choose which modules appear
   and what each one shows.
+- In the CPU and Memory panels, click the ⓧ next to a process to **Quit** it
+  (the app can save first) or **Force Quit** it (after a confirmation).
 
 ## Build from source
 
