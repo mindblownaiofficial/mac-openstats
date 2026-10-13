@@ -19,8 +19,9 @@ Download the installer from the
 - **OpenStats-x.y.z.pkg**: double-click, it installs to Applications and opens.
 - **OpenStats-x.y.z.dmg**: drag OpenStats to Applications.
 
-macOS 13 Ventura or later. Because the app is not notarized, the first launch may
-need a right-click → **Open**. Details, including uninstalling, are in
+macOS 13 Ventura or later. Because the app is not notarized, the first launch is
+blocked by Gatekeeper: open **System Settings → Privacy & Security** and click
+**Open Anyway**. Details, including uninstalling, are in
 [docs/INSTALL.md](docs/INSTALL.md).
 
 ## Features

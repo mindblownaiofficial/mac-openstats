@@ -17,23 +17,28 @@ OpenStats runs on macOS 13 Ventura or later, on Apple silicon and Intel Macs.
 2. Drag **OpenStats** onto the **Applications** shortcut in the window.
 3. Open OpenStats from your Applications folder.
 
-## "OpenStats can't be opened" / unidentified developer
+## "Apple could not verify OpenStats is free of malware"
 
 OpenStats is a free community project and is not notarized with a paid Apple
-Developer account, so the first launch may be blocked by Gatekeeper. Any of these
-unblocks it, once:
+Developer account, so the first launch is blocked by Gatekeeper. Unblock it once:
 
-- **Right-click** (or Control-click) `OpenStats.app` and choose **Open**, then
-  confirm **Open** in the dialog.
-- Or open **System Settings → Privacy & Security**, scroll down and click
-  **Open Anyway** next to the OpenStats message.
-- Or, in Terminal:
+**System Settings (recommended)**
 
-  ```bash
-  xattr -d com.apple.quarantine /Applications/OpenStats.app
-  ```
+1. Try to open OpenStats and click **Done** on the warning.
+2. Open **System Settings → Privacy & Security** and scroll to the Security section.
+3. Click **Open Anyway** next to the OpenStats message and confirm with your
+   password or Touch ID.
 
-The `.pkg` installer may show a similar warning. Right-click it and choose Open.
+**Terminal**
+
+```bash
+xattr -d com.apple.quarantine /Applications/OpenStats.app
+```
+
+The `.pkg` installer may show the same warning. Use Open Anyway in the same
+place, or run `xattr -d com.apple.quarantine` on the downloaded `.pkg`.
+
+On macOS 14 and earlier, right-clicking the app and choosing **Open** also works.
 
 ## Launch at login
 
