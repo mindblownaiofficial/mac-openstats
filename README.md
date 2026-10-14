@@ -9,6 +9,8 @@ subscription. MIT licensed.
 
 ## Screenshot
 <img width="1078" height="45" alt="image" src="https://github.com/user-attachments/assets/e6f9d65c-b987-4aab-9075-64d6b804dcc9" />
+<img width="742" height="545" alt="image" src="https://github.com/user-attachments/assets/add03bd6-c7fa-45b1-ad99-6286fa6a8875" />
+<img width="737" height="550" alt="image" src="https://github.com/user-attachments/assets/29d7d8cc-4d9e-4465-bba6-03b8f8efe38e" />
 
 
 ## Install
